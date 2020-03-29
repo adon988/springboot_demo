@@ -1,5 +1,6 @@
 ### Database Demo
 
+本測試使用的 Schema與Structure
 ```sql
 
 # Dump of table book
@@ -12,7 +13,7 @@ CREATE TABLE `book` (
   `name` varchar(255) DEFAULT NULL,
   `author` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`bookid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
@@ -38,7 +39,7 @@ CREATE TABLE `members` (
   `last_name` varchar(255) NOT NULL DEFAULT '',
   `email` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
@@ -51,6 +52,30 @@ VALUES
 
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
+
+# Dump of table department
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `department`;
+-- Create syntax for TABLE 'department'
+CREATE TABLE `department` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `department_name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+# Dump of table employee
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `employee`;
+-- Create syntax for TABLE 'employee'
+CREATE TABLE `employee` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `lastName` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `gender` int(2) DEFAULT NULL,
+  `dId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ```
-
-
