@@ -608,7 +608,7 @@ public class MyConfig {
 
 ```
 
-### Profile 設定環境，properties 與 yml 使用方式
+### Profile 設定環境，properties ， yml，config 與 jar 使用方式
 
 application.properties 是主配置文件
 
@@ -657,4 +657,19 @@ spring:
     profiles: test
 
 ---
+```
+3. 在設定檔案指定環境
+
+在設定中，透過 Program arguments 設定運行環境
+
+```yaml
+--spring.profiles.active=dev
+```
+
+4. jar 包執行時指定環境
+
+也可以在 jar 包來指定要運行的環境
+
+```cmd
+java -jar xxxxxxxxx.jar --spring.profiles.active=dev
 ```
