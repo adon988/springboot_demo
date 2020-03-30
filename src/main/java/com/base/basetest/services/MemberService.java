@@ -28,21 +28,21 @@ public class MemberService {
 
     public Member updateMember(Member members, Long id) {
         Member updateMember = memberRepository.findById(id).orElse(null);
-        if( updateMember != null ) {
-            updateMember.setFirstName(members.getFirstName());
-            updateMember.setLastName(members.getLastName());
-        }
-        final Member members_result = memberRepository.save(updateMember);
-        return members_result;
+       if( updateMember != null ) {
+           updateMember.setFirstName(members.getFirstName());
+           updateMember.setLastName(members.getLastName());
+       }
+       final Member members_result = memberRepository.save(updateMember);
+       return members_result;
     }
 
-    public Boolean deleteMember (Long id) {
-        Member delMembers = memberRepository.findById(id).orElse(null);
-        if(delMembers != null){
-            memberRepository.delete(delMembers);
-            return true;
-        }
-        return false;
-    }
+   public Boolean deleteMember (Long id) {
+       Member delMembers = memberRepository.findById(id).orElse(null);
+       if(delMembers != null){
+           memberRepository.delete(delMembers);
+           return true;
+       }
+       return false;
+   }
 
 }

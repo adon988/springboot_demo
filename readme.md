@@ -540,3 +540,70 @@ public class HelloController {
 }
 
 ```
+
+### @PropertySource & @ImportResource & Spring 推薦用配置類
+
+PropertySource:
+
+在 Spring boot 可以自定義 properties 檔案，並且透過 @PropertySource 來提取，再讓 @ConfigurationProperties 來讀取
+
+例如，在 resources 建立 personal.properties
+
+可以透過以下方式載入
+
+```java
+import org.springframework.context.annotation.PropertySource;
+@PropertySource(value={"classpath:personal.properties"})
+```
+
+ImportResource:
+
+可以加載 xml 配置文件
+
+例如，在 resource 新增 myconfig.xml 
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <bean id="MemberService" class="com.base.basetest.services.MemberService"></bean>
+</beans>
+```
+
+單一檔案，可以透過 ImportResource 進行載入 spring 設定文件
+
+```java
+import org.springframework.context.annotation.ImportResource;
+@ImportResource(locations = {"classpath:myconfig.xml"})
+```
+
+但是這種 ImportResource 方式並不推薦，在 Spring 推薦用配置類別來配置
+
+Spring 推薦用配置類:
+
+例如：
+
+```java
+package com.base.basetest.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * 聲明當前是一個配置類別
+ */
+@Configuration
+public class MyConfig {
+
+    //Bean 可將方法返回值，添加到容器中
+    @Bean
+    public String aaa(){
+        System.out.println("在配置類別設定添加組件");
+        return "helloworld";
+    }
+}
+
+
+```

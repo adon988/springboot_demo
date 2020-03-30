@@ -4,6 +4,7 @@ import com.base.basetest.bean.MypersonConfiguraties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 
 /**
  * Spring boot 單元測試
@@ -16,8 +17,17 @@ class DemoApplicationTests {
 	MypersonConfiguraties mypersonConfiguraties;
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 		System.out.println(mypersonConfiguraties);
+	}
+
+	@Autowired
+	ApplicationContext ioc;
+
+	@Test
+	public void testMemberService(){
+		boolean b = ioc.containsBean("aaa");
+		System.out.println(b);
 	}
 
 }
