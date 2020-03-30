@@ -511,9 +511,32 @@ public class MypersonConfiguraties {
 例如：application.properites
 
 ```yaml
-persion.last-name = hi
+myperson:
+    say: Hello world config
 ```
 
 ```java
-@Value("${persion.last-name}")
+@Value("${myperson.say}")
+```
+
+例如，在 Controller 中取得單一設定值
+
+```java
+package com.base.basetest.controllers;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HelloController {
+    @Value("${myperson.say}")
+    private String sayHello;
+
+    @RequestMapping("/hello")
+    public String hello(){
+        return sayHello;
+    }
+}
+
 ```

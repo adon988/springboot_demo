@@ -48,3 +48,4 @@ logging:
 myperson:
     name: Adam
     age: 34
+    say: Hello world config
