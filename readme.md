@@ -425,3 +425,95 @@ public class MyBatisPlusCodeGenerator {
 ```
 
 Generator 可直接在  MyBatisPlusCodeGenerator 的 Class 啟動，啟動後，輸入模塊名及表名即可自動生成 CRUD 
+
+
+### @ConfigurationProperties 取得設定
+
+在 Spring Boot 可以透過 appliction.yml 來設定引用的套件，也可以自定義設定
+
+針對自定義的設定，可以透過 ConfigurationProperties 批量取得設定檔的值，並且支持鬆散綁定（同時支援駝峰及底線格式）。以下隱形說明：
+
+首先，在 pom.xml 引入 configuration-processor ，讓 Spring boot 可以取得提示
+```xml
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+```
+
+
+配置文件必須要告訴 Spring boot 他是配置文件，可以載入到 component 中
+方式有兩種，一個是直接在 configuration 檔案中指定 @Configurate 
+或者在 Application 檔案加入 @ConfigurationPropertiesScan (如果在 xxxApplication.java 設定了 ConfigurationScan ，這裡就不用再寫引用這個)
+
+例如：
+```java
+package com.base.basetest;
+
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+
+@SpringBootApplication
+@MapperScan("com.base.basetest.mapper") //使用 MapperScan 批次掃描 mapper 資料夾：mybatis 對 mapper 層自動掃瞄
+@ConfigurationPropertiesScan("com.base.basetest.bean")
+public class DemoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+}
+```
+
+將配置文件中的值，映射到組件
+透過 @ConfigurationProperties 可以告訴 Spring boot ，這個 Class 裡面所有屬性，都是和配置文件綁定
+
+在這裡，統一將 Configuration 放在 bean 資料夾
+
+例如： bean.MypersonConfiguraties.java
+```java
+package com.base.basetest.bean;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+//@Configuration  //如果在 DemoApplication.java 設定了 ConfigurationScan ，這裡就不用再寫引用這個
+@ConfigurationProperties(prefix = "myperson")
+public class MypersonConfiguraties {
+    private String name;
+    private int age;
+    /**
+    * 以上寫完後，透過 cmd+n 自動生成 get, set, toString   （在這裡不贅述）
+    **/
+
+}
+```
+
+### @Value 取得設定值
+
+正常情況，我們都會使用 @ConfigurateProperity 來取得設定值
+但有些情況需要取得單一設定值，就可以透過 @Value 來取得。
+
+@Value 可以注入單一設定值，不支持鬆散綁定
+
+但是可支持 SP 表達式  #{SP}
+
+```xml
+<bean class="Person">
+<property name="LastName" value="支援三種格式：值/${key}/#{SP}"></property>
+</bean>
+```
+
+例如：application.properites
+
+```yaml
+persion.last-name = hi
+```
+
+```java
+@Value("${persion.last-name}")
+```

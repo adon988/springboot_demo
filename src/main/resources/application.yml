@@ -45,3 +45,6 @@ logging:
             hibernate:
                 SQL: DEBUG
                 type: TRACE
+myperson:
+    name: Adam
+    age: 34
