@@ -607,3 +607,54 @@ public class MyConfig {
 
 
 ```
+
+### Profile 設定環境，properties 與 yml 使用方式
+
+application.properties 是主配置文件
+
+可以針對不同環境設定配置：
+
+1. properties 文件設定方式
+
+開發環境設置 application.dev.properties
+正式環境設置 application.prod.properties
+測試環境設置 application.test.properties
+
+激活方式，可以在主配置文件，激活讀取 dev 文件
+```java
+spring.profiles.active=dev
+```
+2. yml 設定方式
+
+透過 application.yml 設定，主要可透過 ```---``` 來設定區塊
+並且透過 ```spring.profiles``` 來定義區塊名稱
+用 ```spring.active``` 指定要執行的區塊
+
+例如，底下指定執行 prod 區塊
+```yaml
+
+spring:
+    profiles:
+        active: prod
+---
+
+server:
+    port: 4000
+spring:
+    profiles: prod
+---
+
+server:
+    port: 4001
+spring:
+    profiles: dev
+
+---
+
+server:
+    port: 4002
+spring:
+    profiles: test
+
+---
+```
